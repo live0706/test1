@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bigprojet/src/widgets/custom_button.dart'; // Importez le widget CustomButton
+import 'package:bigprojet/src/views/mobile/login_view.dart'; // Import LoginScreen
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -10,119 +10,157 @@ class SignupView extends StatefulWidget {
 }
 
 class _SignupViewState extends State<SignupView> {
-  final ValueNotifier<String?> _roleNotifier = ValueNotifier<String?>(null);
+  bool _isPolicyAccepted = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Center(
-                child: Image.asset(
-                  'assets/logo.png', // Assurez-vous que le logo est dans le dossier assets
-                  height: 150,
+      appBar: AppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: SingleChildScrollView(
+            // Add SingleChildScrollView to handle overflow
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 5), // Decrease space above the logo
+                Image.asset(
+                  'assets/logo.png', // Updated file path
+                  height: 150, // Decrease the height of the logo
+                  fit: BoxFit.contain,
                 ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Inscription',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Adresse mail',
-                  border: OutlineInputBorder(),
+                SizedBox(height: 5),
+                Text(
+                  'Inscription',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Mot de passe',
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-              ),
-              SizedBox(height: 20),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Confirmation mot de passe',
-                  border: OutlineInputBorder(),
-                ),
-                obscureText: true,
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Qui suis-je ?',
-                style: TextStyle(fontSize: 18),
-              ),
-              ValueListenableBuilder<String?>(
-                valueListenable: _roleNotifier,
-                builder: (context, role, child) {
-                  return Column(
-                    children: [
-                      ListTile(
-                        title: const Text('Médecin'),
-                        leading: Radio<String>(
-                          value: 'medecin',
-                          groupValue: role,
+                SizedBox(height: 5), // Decrease space above the card
+                Card(
+                  elevation: 4.0,
+                  child: Container(
+                    width: 400, // Width of the card
+                    padding:
+                        const EdgeInsets.all(20.0), // Padding inside the card
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Nom',
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Prénom',
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Mot de passe',
+                          ),
+                          obscureText: true,
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                          decoration: InputDecoration(
+                            labelText: 'Confirmation mot de passe',
+                          ),
+                          obscureText: true,
+                        ),
+                        DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            labelText: 'Choisissez votre rôle',
+                          ),
+                            items: [
+                            DropdownMenuItem(
+                              value: 'medecin',
+                              child: Text('Médecin'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'infirmier',
+                              child: Text('Infirmier'),
+                            ),
+                            ],
                           onChanged: (value) {
-                            _roleNotifier.value = value;
+                            setState(() {
+                              // Store the selected role
+                              if (value == 'medecin') {
+                              Navigator.pushNamed(context, '/medecin');
+                              } else if (value == 'infirmier') {
+                              Navigator.pushNamed(context, '/infirmier');
+                              }
+                            });
                           },
                         ),
-                      ),
-                      ListTile(
-                        title: const Text('Infirmier'),
-                        leading: Radio<String>(
-                          value: 'infirmier',
-                          groupValue: role,
-                          onChanged: (value) {
-                            _roleNotifier.value = value;
-                          },
+                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                          Checkbox(
+                            value: _isPolicyAccepted,
+                            onChanged: (newValue) {
+                            setState(() {
+                              _isPolicyAccepted = newValue!;
+                            });
+                            },
+                          ),
+                          SizedBox(width: 8), // Add some space between checkbox and text
+                          Expanded(
+                            child: Text("J'accepte la politique de confidentialité"),
+                          ),
+                          ],
                         ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              SizedBox(height: 20),
-              CustomButton(
-                text: 'M\'inscrire',
-                onPressed: () {
-                  if (_roleNotifier.value == 'medecin') {
-                    Navigator.pushNamed(context, '/medecin');
-                  } else if (_roleNotifier.value == 'infirmier') {
-                    Navigator.pushNamed(context, '/infirmier');
-                  } else {
-                    // Handle case where no role is selected
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Veuillez sélectionner un rôle.')),
-                    );
-                  }
-                },
-              ),
-              SizedBox(height: 100),
-              Center(
-                child: Text(
-                  'Vous avez déjà un compte?',
-                  style: TextStyle(fontSize: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Logique d'inscription
+                          },
+                          child: Text('S\'inscrire'),
+                        ),
+                        SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Vous avez déjà un compte? '),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginView(userType: '',)),
+                                );
+                              },
+                              child: Text(
+                                'Connexion',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-              CustomButton(
-                text: 'Se connecter',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
+}
+
+
 }

@@ -1,6 +1,7 @@
+import 'package:bigprojet/src/views/mobile/welcome_view.dart';
 import 'package:flutter/material.dart';
 import 'package:bigprojet/src/widgets/menu_patient.dart';
-import 'package:bigprojet/src/views/mobile/login_view.dart';
+
 class ProfilePatientView extends StatelessWidget {
   const ProfilePatientView ({super.key});
 
@@ -19,7 +20,7 @@ class ProfilePatientView extends StatelessWidget {
                   onPressed: () {
                     // Ajoutez ici la logique de déconnexion
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => LoginView()),
+                      MaterialPageRoute(builder: (context) => WelcomeView()),
                     );
                   },
                   child: Text('Se déconnecter'),

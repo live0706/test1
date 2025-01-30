@@ -20,7 +20,7 @@ class ProfileInfirmierView extends StatelessWidget {
                   onPressed: () {
                     // Ajoutez ici la logique de déconnexion
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => LoginView()),
+                      MaterialPageRoute(builder: (context) => LoginView(userType: '',)),
                     );
                   },
                   child: Text('Se déconnecter'),

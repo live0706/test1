@@ -22,9 +22,9 @@ class CustomButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         /// Le rembourrage à l'intérieur du bouton.
-        padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 8.0),
+        padding: EdgeInsets.symmetric(horizontal:18.0, vertical: 20.0),
         /// Le style de texte de l'étiquette du bouton.
-        textStyle: TextStyle(fontSize: 25.0),
+        textStyle: TextStyle(fontSize: 18.0),
       ),
       /// L'étiquette de texte du bouton.
       child: Text(text),
