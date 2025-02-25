@@ -29,12 +29,7 @@ class WelcomeView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/login');
-                      },
-                      child: Text('Je suis médecin'),
-                    ),
+                    
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/login');
@@ -44,12 +39,7 @@ class WelcomeView extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/patient');
-                  },
-                  child: Text('je suis patient'),
-                ),
+                
                 SizedBox(height: 40), // Add space below the buttons
               ],
             ),

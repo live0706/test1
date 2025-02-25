@@ -58,12 +58,13 @@ class LoginView extends StatelessWidget {
                         obscureText: true,
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Add your login logic here
-                        },
-                        child: Text('Se connecter'),
-                      ),
+                       ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/infirmier');
+                      },
+                      child: Text('Se connecter'),
+                    ),
+                  
                       SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
